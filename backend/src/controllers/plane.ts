@@ -31,8 +31,8 @@ export class PlaneController {
             res.status(400).json({ error: 'Missing required fields' });
         }
 
-        const planeId = await this.planeService.addPlane({ name, lat, lng });
+        const plane = await this.planeService.addPlane({ name, lat, lng });
 
-        res.status(201).json({ id: planeId, name, lat, lng });
+        res.status(201).json(plane);
     }
 }
