@@ -17,9 +17,13 @@ export class PlaneService {
 
     async getPlane(id: string) {
         const plane = await this.redisService.redisClient.hGetAll(`plane:${id}`);
-        const planeLocation = await this.redisService.redisClient.geoPos('planes', id);
+        const [planeLocation] = await this.redisService.redisClient.geoPos('planes', id);
 
-        return { ...plane, lat: planeLocation[0]?.latitude, lng: planeLocation[0]?.longitude };
+        if (!planeLocation) {
+            throw new Error('Plane without location');
+        }
+
+        return { ...plane, lat: planeLocation.latitude, lng: planeLocation.longitude };
     }
 
     async addPlane({ name, lat, lng }: Omit<Plane, 'id'>) {
