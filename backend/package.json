@@ -4,6 +4,7 @@
   "main": "index.js",
   "type": "module",
   "dependencies": {
+    "body-parser": "^2.0.1",
     "express": "^5.0.1",
     "redis": "^4.2.0",
     "socket.io": "^4.5.1"
