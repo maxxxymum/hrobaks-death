@@ -8,7 +8,21 @@ export class PlaneController {
         this.planeService = userService;
     }
 
-    getPlane(req: Request, res: Response) { };
+    async getPlane(req: Request, res: Response) {
+        const { id } = req.params;
+
+        if (id) {
+            const plane = await this.planeService.getPlane(id);
+
+            if (plane) {
+                res.json(plane);
+            } else {
+                res.status(404).json({ error: 'Plane not found' });
+            }
+        } else {
+            res.status(400).json({ error: 'Missing plane id' });
+        }
+    };
 
     async addPlane(req: Request, res: Response) {
         const { name, lat, lng } = req.body;

@@ -18,6 +18,8 @@ export function startServer() {
     console.log(`Server is running on http://localhost:${PORT}`);
   });
 
+  app.get('/plane/:id', async (req, res) => controllers.planeController.getPlane(req, res));
+
   app.post('/plane', async (req, res) => controllers.planeController.addPlane(req, res));
 
   return app;
