@@ -1,0 +1,14 @@
+node_modules
+dist
+build
+# Logs
+logs
+*.log
+
+# Misc
+out
+.vscode
+.history
+.idea
+tsconfig.tsbuildinfo
+**/.DS_Store
