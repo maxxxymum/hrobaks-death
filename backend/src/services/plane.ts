@@ -1,6 +1,7 @@
 import { RedisService } from "./redis.js";
 import { randomUUID } from "node:crypto";
 import type { SocketService } from "./socket.js";
+import { GeoReplyWith } from "redis";
 
 type Plane = {
     id: string;
@@ -18,17 +19,6 @@ export class PlaneService {
         this.socketService = socketService
     }
 
-    async getPlane(id: string) {
-        const plane = await this.redisService.redisClient.hGetAll(`plane:${id}`);
-        const [planeLocation] = await this.redisService.redisClient.geoPos('planes', id);
-
-        if (!planeLocation) {
-            throw new Error('Plane without location');
-        }
-
-        return { ...plane, lat: planeLocation.latitude, lng: planeLocation.longitude };
-    }
-
     async addPlane({ name, lat, lng }: Omit<Plane, 'id'>) {
         const userId = randomUUID();
 
@@ -40,5 +30,17 @@ export class PlaneService {
         this.socketService.emit('plane-created', newPlane);
 
         return newPlane;
+    }
+
+    async getAllPlanesNearBy(plane: Plane) {
+        const planes = await this.redisService.redisClient.geoSearchWith('planes', { longitude: plane.lng, latitude: plane.lat }, { radius: 200, unit: 'km' }, [GeoReplyWith.COORDINATES]);
+        return planes.map(({ member, coordinates }) => ({ id: member, lng: coordinates?.longitude, lat: coordinates?.latitude }));
+    }
+
+    async getPlane(id: string) {
+        const plane = await this.redisService.redisClient.hGetAll(`plane:${id}`);
+        const planeLocation = await this.redisService.redisClient.geoPos('planes', id);
+
+        return { id, ...plane, lat: planeLocation[0]?.latitude, lng: planeLocation[0]?.longitude }
     }
 }

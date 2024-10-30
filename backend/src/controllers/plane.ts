@@ -32,7 +32,10 @@ export class PlaneController {
         }
 
         const plane = await this.planeService.addPlane({ name, lat, lng });
+        const planesNearBy = await this.planeService.getAllPlanesNearBy(plane);
 
-        res.status(201).json(plane);
+        console.log('planesNearBy', planesNearBy);
+
+        res.status(201).json({ plane, planesNearBy });
     }
 }
