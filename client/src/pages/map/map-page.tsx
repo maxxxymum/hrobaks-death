@@ -20,7 +20,8 @@ export const MapPage = () => {
         <Section size='4'>
             <Container size={'4'}>
                 <Box width={'800px'} height={'500px'}>
-                    <Map myPlane={myPlane!} />
+                    {myPlane ? <Map myPlane={myPlane} /> : null}
+
                 </Box>
 
             </ Container>
