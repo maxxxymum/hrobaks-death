@@ -14,6 +14,10 @@ export const NewTargetsProvider = ({ children }: PropsWithChildren) => {
             console.log("new-target", target);
             setNewTargets((targets) => [...targets, target]);
         });
+
+        return () => {
+            socket.off("new-target");
+        }
     }, [socket]);
 
     return (

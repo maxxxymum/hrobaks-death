@@ -19,6 +19,7 @@ export const NewTargets = () => {
                                 <Text>{`Distance: ${target.distance} km`}</Text>
                                 <Text>{`Latitude: ${target.lat}`}</Text>
                                 <Text>{`Longitude: ${target.lng}`}</Text>
+                                <Text>{`ID: ${target.id}`}</Text>
                             </Flex>
                         </Card>
                     </Box>
