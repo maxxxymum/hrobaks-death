@@ -1,7 +1,7 @@
 import { Marker, useMapEvent } from "react-leaflet"
 import { useState } from "react"
 import { LatLng } from "leaflet";
-import { HrobakIcon } from "../icons/hrobak";
+import { HrobakIcon } from "./icons/hrobak";
 
 export const TargetTracker = () => {
     const [targets, setTargets] = useState<LatLng[]>([]);

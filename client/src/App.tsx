@@ -1,13 +1,13 @@
 import { Theme } from "@radix-ui/themes";
 import { Router } from "./router";
-import { SocketProvider } from "./providers/socket-provider";
+import { AppCtxProvider } from "./providers/app-ctx-provider";
 
 export const App = () => {
   return (
     <Theme appearance="dark" accentColor="tomato">
-      <SocketProvider>
+      <AppCtxProvider>
         <Router />
-      </SocketProvider>
+      </AppCtxProvider>
     </Theme>
   )
 }

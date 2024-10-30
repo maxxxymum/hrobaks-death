@@ -1,15 +1,15 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Layout } from './layout.tsx';
-import { Login } from './pages/login/login.tsx';
-import { Map } from './pages/map/map.tsx';
+import { LoginPage } from './pages/login/login-page.tsx';
+import { MapPage } from './pages/map/map-page.tsx';
 
 export const Router = () => {
     return (
         <BrowserRouter>
             <Routes>
                 <Route element={<Layout />}>
-                    <Route index path="/" element={<Login />} />
-                    <Route path="/map" element={<Map />} />
+                    <Route index path="/" element={<LoginPage />} />
+                    <Route path="/map" element={<MapPage />} />
                 </Route>
             </Routes>
         </BrowserRouter >
