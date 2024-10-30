@@ -1,13 +1,15 @@
 import { Server } from "socket.io";
 
 export class SocketService {
-    private socket: Server;
+    socketServer: Server;
 
-    constructor(socket: Server) {
-        this.socket = socket;
-    }
+    constructor(socketServer: Server) {
+        this.socketServer = socketServer;
 
-    public emit(event: string, data: any) {
-        this.socket.emit(event, data);
+        socketServer.on('connection', (socket) => {
+            socket.on('join-plane-channel', (planeId: string) => {
+                socket.join(planeId);
+            });
+        });
     }
 }

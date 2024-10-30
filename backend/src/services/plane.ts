@@ -27,7 +27,7 @@ export class PlaneService {
 
         const newPlane = { id: userId, name, lat, lng };
 
-        this.socketService.emit('plane-created', newPlane);
+        this.socketService.socketServer.emit('plane-created', newPlane);
 
         return newPlane;
     }

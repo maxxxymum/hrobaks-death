@@ -10,4 +10,5 @@ export type Target = {
     planeId: string;
     lat: number;
     lng: number;
+    distance: number;
 }

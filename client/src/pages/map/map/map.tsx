@@ -9,7 +9,7 @@ export type MapProps = {
 }
 
 export const Map = ({ myPlane }: MapProps) => {
-    return <MapContainer center={[myPlane.lat, myPlane.lng]} zoom={9} scrollWheelZoom={false} style={{ height: '500px' }}>
+    return <MapContainer center={[myPlane.lat, myPlane.lng]} zoom={9} scrollWheelZoom={false} style={{ height: '100%' }}>
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
         <Marker position={[myPlane.lat, myPlane.lng]} icon={PlaneIcon} />
         <TargetTracker />

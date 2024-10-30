@@ -1,4 +1,4 @@
-import { Heading, Text, TextField, Button } from "@radix-ui/themes";
+import { Heading, TextField, Button, Flex } from "@radix-ui/themes";
 import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useMyPlane } from "../../hooks/use-my-plane";
@@ -14,15 +14,13 @@ const useOnLoginClick = () => {
 
     const { setMyPlane } = useMyPlane();
     const { setPlanes } = usePlanes();
-    const { setTargets } = useTargets();
+    const { setTargets } = useTargets(); 
 
     const onLoginClick = async (name: string | undefined) => {
         if (!name) return;
 
         const { lat, lng } = getRandomPlanePosition();
         const { plane, planesNearBy, targetsNearBy } = await createPlaneApi({ name, lat, lng });
-
-        console.log(plane, planesNearBy, targetsNearBy);
 
         setMyPlane(plane);
         setPlanes(planesNearBy);
@@ -39,13 +37,12 @@ export const LoginPage = () => {
     const onLoginClick = useOnLoginClick();
 
     return (
-        <>
-            <Heading as="h2" size={'4'}>Login</Heading>
-            <Text>Plane name</Text>
-            <TextField.Root placeholder="Plane name" ref={input} />
-            <Button onClick={() => {
+        <Flex direction={'column'} gap={'4'} justify={'center'} align={'center'}>
+            <Heading as="h2" size={'6'}>Plane Name</Heading>
+            <TextField.Root size={'3'} placeholder="Enter plane name" ref={input} />
+            <Button size={'3'} onClick={() => {
                 onLoginClick(input.current?.value);
             }}>Let's go</Button>
-        </>
+        </Flex>
     )
 }

@@ -11,6 +11,8 @@ type Target = {
     lng: number;
 }
 
+type TargetWithDistance = Target & { distance: number };
+
 export class TargetService {
     private redisService: RedisService;
     private socketService: SocketService
@@ -36,14 +38,28 @@ export class TargetService {
 
         const newTarget = { id, ...target };
 
-        this.socketService.emit('target-created', newTarget);
+        this.notifyNearbyPlanesAboutNewTarget(newTarget);
 
         return newTarget;
     }
 
-    async getAllTargetsNearBy(plane: Plane) {
-        const targets = await this.redisService.redisClient.geoSearchWith('targets', { longitude: plane.lng, latitude: plane.lat }, { radius: 200, unit: 'km' }, [GeoReplyWith.COORDINATES]);
+    async notifyNearbyPlanesAboutNewTarget(target: Target) {
+        const distances = await this.getDistanceToNearbyPlanes(target);
 
-        return targets.map(({ member, coordinates }) => ({ id: member, lng: coordinates?.longitude, lat: coordinates?.latitude }));
+        distances.forEach(({ planeId, distance }) => {
+            this.socketService.socketServer.to(planeId).emit('new-target', { ...target, distance });
+        });
+    }
+
+    async getDistanceToNearbyPlanes(target: Target) {
+        const planes = await this.redisService.redisClient.geoSearchWith('planes', { longitude: target.lng, latitude: target.lat }, { radius: 200, unit: 'km' }, [GeoReplyWith.DISTANCE]);
+
+        return planes.map(({ member, distance }) => ({ planeId: member, distance }));
+    }
+
+    async getAllTargetsNearBy(plane: Plane) {
+        const targets = await this.redisService.redisClient.geoSearchWith('targets', { longitude: plane.lng, latitude: plane.lat }, { radius: 200, unit: 'km' }, [GeoReplyWith.COORDINATES, GeoReplyWith.DISTANCE]);
+
+        return targets.map(({ member, coordinates, distance }) => ({ id: member, lng: coordinates?.longitude, lat: coordinates?.latitude, distance }));
     }
 }

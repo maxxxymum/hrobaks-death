@@ -1,8 +1,9 @@
-import { Section, Container, Box } from '@radix-ui/themes';
+import { Box, Flex } from '@radix-ui/themes';
 import { useEffect } from 'react';
 import { useMyPlane } from '../../hooks/use-my-plane';
 import { useNavigate } from 'react-router-dom';
 import { Map } from './map/map';
+import { NewTargets } from './new-targets';
 
 import 'leaflet/dist/leaflet.css';
 
@@ -17,13 +18,11 @@ export const MapPage = () => {
     }, [myPlane, navigate]);
 
     return (
-        <Section size='4'>
-            <Container size={'4'}>
-                <Box width={'800px'} height={'500px'}>
-                    {myPlane ? <Map myPlane={myPlane} /> : null}
-                </Box>
-            </ Container>
-        </Section >
-
+        <Flex width={'100%'} flexGrow={'1'} align={'stretch'}>
+            <Box flexGrow={'1'} width={'100%'} height={'100%'}>
+                {myPlane ? <Map myPlane={myPlane} /> : null}
+            </Box>
+            <NewTargets />
+        </Flex>
     );
 }
