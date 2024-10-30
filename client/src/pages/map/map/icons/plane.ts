@@ -1,11 +1,10 @@
 import { divIcon } from 'leaflet';
 
-
-export const PlaneIcon = divIcon({
+const createPlaneIcon = (color: string, size = 50) => divIcon({
     html: `<?xml version="1.0" encoding="iso-8859-1"?>
                 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-                    <svg fill="#000000" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
-                        width="50px" height="50px" viewBox="0 0 318.194 318.194"
+                    <svg fill="${color}" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+                        width="${size}px" height="${size}px" viewBox="0 0 318.194 318.194"
                         xml:space="preserve">
                             <g>
                                 <g>
@@ -22,6 +21,9 @@ export const PlaneIcon = divIcon({
                     </svg>
 `,
     className: "",
-    iconSize: [50, 50],
-    iconAnchor: [25, 25],
+    iconSize: [size, size],
+    iconAnchor: [size / 2, size / 2],
 });
+
+export const MyPlaneIcon = createPlaneIcon('#3e58da', 80);
+export const AlliedPlaneIcon = createPlaneIcon('#43464e');
