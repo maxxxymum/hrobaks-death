@@ -1,5 +1,6 @@
 import { Section, Container, Box } from '@radix-ui/themes';
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
+import { MapContainer, TileLayer, Marker } from 'react-leaflet';
+import { PlaneIcon } from './icons/plane';
 
 import 'leaflet/dist/leaflet.css';
 
@@ -12,11 +13,7 @@ export const Map = () => {
                         <TileLayer
                             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                         />
-                        <Marker position={[55.752836452662, 37.6228417793383]}>
-                            <Popup>
-                                A pretty CSS3 popup. <br /> Easily customizable.
-                            </Popup>
-                        </Marker>
+                        <Marker position={[55.752836452662, 37.6228417793383]} icon={PlaneIcon} />
                     </MapContainer>
                 </Box>
 
