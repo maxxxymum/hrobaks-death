@@ -1,5 +1,6 @@
 import { RedisService } from "./redis.js";
 import { randomUUID } from "node:crypto";
+import type { SocketService } from "./socket.js";
 
 type Plane = {
     id: string;
@@ -10,9 +11,11 @@ type Plane = {
 
 export class PlaneService {
     private redisService: RedisService;
+    private socketService: SocketService
 
-    constructor(redisService: RedisService) {
+    constructor(redisService: RedisService, socketService: SocketService) {
         this.redisService = redisService
+        this.socketService = socketService
     }
 
     async getPlane(id: string) {
@@ -32,6 +35,10 @@ export class PlaneService {
         await this.redisService.redisClient.hSet(`plane:${userId}`, { name });
         await this.redisService.redisClient.geoAdd('planes', { longitude: lng, latitude: lat, member: userId });
 
-        return { id: userId, name, lat, lng };
+        const newPlane = { id: userId, name, lat, lng };
+
+        this.socketService.emit('plane-created', newPlane);
+
+        return newPlane;
     }
 }

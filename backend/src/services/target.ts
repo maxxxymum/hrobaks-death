@@ -1,5 +1,6 @@
 import { RedisService } from './redis.js';
 import { randomUUID } from 'node:crypto';
+import { SocketService } from './socket.js';
 
 type Target = {
     id: string;
@@ -10,9 +11,11 @@ type Target = {
 
 export class TargetService {
     private redisService: RedisService;
+    private socketService: SocketService
 
-    constructor(redisService: RedisService) {
+    constructor(redisService: RedisService, socketService: SocketService) {
         this.redisService = redisService
+        this.socketService = socketService
     }
 
     async getTarget(id: string) {
