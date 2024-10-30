@@ -11,9 +11,11 @@ export function createExpressApp(controllers: ReturnType<typeof initControllers>
     app.use(bodyParser.urlencoded({ extended: true }));
     app.use(cors());
 
-    app.get('/plane/:id', async (req, res) => controllers.planeController.getPlane(req, res));
+    app.get('/plane/:id', (req, res) => controllers.planeController.getPlane(req, res));
 
-    app.post('/plane', async (req, res) => controllers.planeController.addPlane(req, res));
+    app.post('/plane', (req, res) => controllers.planeController.addPlane(req, res));
+
+    app.post('/target', (req, res) => controllers.targetController.addTarget(req, res));
 
     return app;
 }

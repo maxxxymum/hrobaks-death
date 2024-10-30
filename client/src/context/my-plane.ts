@@ -1,11 +1,5 @@
 import { createContext, Dispatch, SetStateAction } from "react";
-
-export type Plane = {
-    id: string;
-    name: string;
-    lat: number;
-    lng: number;
-}
+import type { Plane } from "../types";
 
 type PlainContext = { myPlane: Plane | undefined, setMyPlane: Dispatch<SetStateAction<Plane | undefined>> };
 

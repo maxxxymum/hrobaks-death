@@ -2,7 +2,7 @@ import { Heading, Text, TextField, Button } from "@radix-ui/themes";
 import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useMyPlane } from "../../hooks/use-my-plain";
-import { createPlane } from "../../api/plane";
+import { createPlaneApi } from "../../api/plane-api";
 
 export const LoginPage = () => {
     const navigate = useNavigate();
@@ -12,7 +12,7 @@ export const LoginPage = () => {
 
     const onLoginClick = async () => {
         if (input.current?.value) {
-            const plane = await createPlane({ name: input.current.value, lat: 55.752836452662, lng: 37.6228417793383 });
+            const plane = await createPlaneApi({ name: input.current.value, lat: 55.752836452662, lng: 37.6228417793383 });
 
             setMyPlane(plane);
             navigateToMap();

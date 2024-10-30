@@ -1,12 +1,11 @@
 import { RedisService } from './redis.js';
 import { randomUUID } from 'node:crypto';
 
-
 type Target = {
-    name: string;
+    id: string;
     planeId: string;
-    lat: string;
-    lng: string;
+    lat: number;
+    lng: number;
 }
 
 export class TargetService {
@@ -25,10 +24,10 @@ export class TargetService {
 
     async addTarget(target: Omit<Target, 'id'>) {
         const id = randomUUID();
-        const { planeId, name, lat, lng } = target;
+        const { planeId, lat, lng } = target;
 
-        await this.redisService.redisClient.hSet(`target:${id}`, { planeId, name });
-        await this.redisService.redisClient.geoAdd('targets', { longitude: lng, latitude: lat, member: id });
+        await this.redisService.redisClient.hSet(`target:${id}`, { planeId, id });
+        await this.redisService.redisClient.geoAdd('targets', { longitude: Number(lng), latitude: Number(lat), member: id });
 
         return { id, ...target };
     }

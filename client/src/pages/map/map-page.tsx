@@ -21,9 +21,7 @@ export const MapPage = () => {
             <Container size={'4'}>
                 <Box width={'800px'} height={'500px'}>
                     {myPlane ? <Map myPlane={myPlane} /> : null}
-
                 </Box>
-
             </ Container>
         </Section >
 

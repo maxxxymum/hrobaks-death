@@ -4,8 +4,8 @@ import { PlaneService } from "../services/plane.js";
 export class PlaneController {
     private planeService: PlaneService;
 
-    constructor(userService: PlaneService) {
-        this.planeService = userService;
+    constructor(planeService: PlaneService) {
+        this.planeService = planeService;
     }
 
     async getPlane(req: Request, res: Response) {

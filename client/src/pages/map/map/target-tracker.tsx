@@ -1,25 +1,24 @@
 import { Marker, useMapEvent } from "react-leaflet"
 import { useState } from "react"
-import { LatLng } from "leaflet";
 import { HrobakIcon } from "./icons/hrobak";
-import { useSocket } from "../../../hooks/use-socket";
 import { useMyPlane } from "../../../hooks/use-my-plain";
+import { createTargetApi } from "../../../api/target-api";
+import { Target } from "../../../types";
 
 export const TargetTracker = () => {
-    const [targets, setTargets] = useState<LatLng[]>([]);
-    const socket = useSocket();
+    const [targets, setTargets] = useState<Target[]>([]);
     const { myPlane } = useMyPlane();
 
-    const addTarget = (target: LatLng) => {
+    const addTarget = (target: Target) => {
         setTargets((prevTargets) => [...prevTargets, target]);
     }
 
-    useMapEvent('click', ({ latlng }) => {
+    useMapEvent('click', async ({ latlng }) => {
         if (myPlane?.id) {
-            socket.emit('target', { lat: latlng.lat, lng: latlng.lng, planeId: myPlane.id });
-            addTarget(latlng);
+            const target = await createTargetApi({ lat: latlng.lat, lng: latlng.lng, planeId: myPlane.id });
+            addTarget(target);
         }
     });
 
-    return <>{targets.map((target) => <Marker position={target} icon={HrobakIcon} />)}</>;
+    return <>{targets.map((target) => <Marker key={target.id} position={target} icon={HrobakIcon} />)}</>;
 }

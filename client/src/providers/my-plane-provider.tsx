@@ -1,5 +1,6 @@
 import { PropsWithChildren, useMemo, useState } from "react";
-import { MyPlaneContext, Plane } from "../context/my-plane";
+import { MyPlaneContext } from "../context/my-plane";
+import type { Plane } from "../types";
 
 export const MyPlaneProvider = ({ children }: PropsWithChildren) => {
     const [myPlane, setMyPlane] = useState<Plane | undefined>(undefined);
