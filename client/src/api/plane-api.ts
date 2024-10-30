@@ -1,9 +1,10 @@
-import { Plane } from "../types";
+import { Plane, Target } from "../types";
 import { httpClient } from "./httpClient";
 
 type CreatePlaneApiResponse = {
     plane: Plane,
     planesNearBy: Plane[]
+    targetsNearBy: Target[]
 }
 
 export const createPlaneApi = async ({ name, lat, lng }: Omit<Plane, 'id'>) => {

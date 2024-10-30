@@ -9,7 +9,6 @@ export const PlanesProvider = ({ children }: PropsWithChildren) => {
 
     useEffect(() => {
         socket.on("plane-created", (plane: Plane) => {
-            console.log("plane-created", plane);
             setPlanes((planes) => [...planes, plane]);
         });
     }, [socket]);

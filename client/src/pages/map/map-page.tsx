@@ -1,6 +1,6 @@
 import { Section, Container, Box } from '@radix-ui/themes';
 import { useEffect } from 'react';
-import { useMyPlane } from '../../hooks/use-my-plain';
+import { useMyPlane } from '../../hooks/use-my-plane';
 import { useNavigate } from 'react-router-dom';
 import { Map } from './map/map';
 

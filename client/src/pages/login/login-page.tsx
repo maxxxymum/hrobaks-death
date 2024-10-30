@@ -1,35 +1,51 @@
 import { Heading, Text, TextField, Button } from "@radix-ui/themes";
 import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { useMyPlane } from "../../hooks/use-my-plain";
+import { useMyPlane } from "../../hooks/use-my-plane";
 import { createPlaneApi } from "../../api/plane-api";
 import { usePlanes } from "../../hooks/use-planes";
 import { getRandomPlanePosition } from "./getRandomPlanePosition";
+import { useTargets } from "../../hooks/use-targets";
 
-export const LoginPage = () => {
+
+const useOnLoginClick = () => {
     const navigate = useNavigate();
     const navigateToMap = () => navigate('/map');
-    const input = useRef<HTMLInputElement>(null);
+
     const { setMyPlane } = useMyPlane();
     const { setPlanes } = usePlanes();
+    const { setTargets } = useTargets();
 
-    const onLoginClick = async () => {
-        if (input.current?.value) {
-            const { lat, lng } = getRandomPlanePosition();
-            const { plane, planesNearBy } = await createPlaneApi({ name: input.current.value, lat, lng });
+    const onLoginClick = async (name: string | undefined) => {
+        if (!name) return;
 
-            setMyPlane(plane);
-            setPlanes(planesNearBy);
-            navigateToMap();
-        }
+        const { lat, lng } = getRandomPlanePosition();
+        const { plane, planesNearBy, targetsNearBy } = await createPlaneApi({ name, lat, lng });
+
+        console.log(plane, planesNearBy, targetsNearBy);
+
+        setMyPlane(plane);
+        setPlanes(planesNearBy);
+        setTargets(targetsNearBy);
+        navigateToMap();
     }
+
+    return onLoginClick;
+}
+
+export const LoginPage = () => {
+    const input = useRef<HTMLInputElement>(null);
+
+    const onLoginClick = useOnLoginClick();
 
     return (
         <>
             <Heading as="h2" size={'4'}>Login</Heading>
             <Text>Plane name</Text>
             <TextField.Root placeholder="Plane name" ref={input} />
-            <Button onClick={onLoginClick}>Let's go</Button>
+            <Button onClick={() => {
+                onLoginClick(input.current?.value);
+            }}>Let's go</Button>
         </>
     )
 }

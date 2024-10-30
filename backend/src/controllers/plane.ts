@@ -1,11 +1,14 @@
 import type { Request, Response } from "express";
 import { PlaneService } from "../services/plane.js";
+import { TargetService } from "../services/target.js";
 
 export class PlaneController {
     private planeService: PlaneService;
+    private targetService: TargetService
 
-    constructor(planeService: PlaneService) {
+    constructor(planeService: PlaneService, targetService: TargetService) {
         this.planeService = planeService;
+        this.targetService = targetService;
     }
 
     async getPlane(req: Request, res: Response) {
@@ -33,9 +36,8 @@ export class PlaneController {
 
         const plane = await this.planeService.addPlane({ name, lat, lng });
         const planesNearBy = await this.planeService.getAllPlanesNearBy(plane);
+        const targetsNearBy = await this.targetService.getAllTargetsNearBy(plane);
 
-        console.log('planesNearBy', planesNearBy);
-
-        res.status(201).json({ plane, planesNearBy });
+        res.status(201).json({ plane, planesNearBy, targetsNearBy });
     }
 }

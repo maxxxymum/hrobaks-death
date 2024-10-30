@@ -1,6 +1,8 @@
 import { RedisService } from './redis.js';
 import { randomUUID } from 'node:crypto';
 import { SocketService } from './socket.js';
+import { GeoReplyWith } from 'redis';
+import type { Plane } from './plane.js';
 
 type Target = {
     id: string;
@@ -33,5 +35,11 @@ export class TargetService {
         await this.redisService.redisClient.geoAdd('targets', { longitude: Number(lng), latitude: Number(lat), member: id });
 
         return { id, ...target };
+    }
+
+    async getAllTargetsNearBy(plane: Plane) {
+        const targets = await this.redisService.redisClient.geoSearchWith('targets', { longitude: plane.lng, latitude: plane.lat }, { radius: 200, unit: 'km' }, [GeoReplyWith.COORDINATES]);
+
+        return targets.map(({ member, coordinates }) => ({ id: member, lng: coordinates?.longitude, lat: coordinates?.latitude }));
     }
 }

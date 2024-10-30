@@ -3,7 +3,7 @@ import { randomUUID } from "node:crypto";
 import type { SocketService } from "./socket.js";
 import { GeoReplyWith } from "redis";
 
-type Plane = {
+export type Plane = {
     id: string;
     name: string;
     lat: number;

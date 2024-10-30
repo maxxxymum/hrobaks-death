@@ -6,8 +6,7 @@ export type Controllers = ReturnType<typeof initControllers>;
 
 export function initControllers(services: ReturnType<typeof initServices>) {
     return {
-        planeController: new PlaneController(services.planeService),
+        planeController: new PlaneController(services.planeService, services.targetService),
         targetController: new TargetController(services.targetService)
-
     }
 }
