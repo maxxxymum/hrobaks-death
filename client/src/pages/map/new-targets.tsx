@@ -14,7 +14,7 @@ export const NewTargets = () => {
                     <Box py='2' px={'3'}>
                         <Card>
                             <Flex direction={'column'}>
-                                <Text color={'tomato'}>New Hrobak</Text>
+                                <Text color={'tomato'}>HROBAK</Text>
                                 <Separator size={'4'} />
                                 <Text>{`Distance: ${target.distance} km`}</Text>
                                 <Text>{`Latitude: ${target.lat}`}</Text>

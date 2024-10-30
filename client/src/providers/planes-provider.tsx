@@ -11,6 +11,10 @@ export const PlanesProvider = ({ children }: PropsWithChildren) => {
         socket.on("plane-created", (plane: Plane) => {
             setPlanes((planes) => [...planes, plane]);
         });
+
+        return () => {
+            socket.off("plane-created");
+        }
     }, [socket]);
 
 
