@@ -10,5 +10,5 @@ out
 .vscode
 .history
 .idea
-tsconfig.tsbuildinfo
+*.tsbuildinfo
 **/.DS_Store

@@ -7,28 +7,28 @@ services:
     networks:
       - app-network
 
-  # backend:
-  #   build: ./backend
-  #   container_name: backend
-  #   ports:
-  #     - "4000:4000"
-  #   environment:
-  #     - REDIS_HOST=redis
-  #     - REDIS_PORT=6379
-  #   depends_on:
-  #     - redis
-  #   networks:
-  #     - app-network
+  backend:
+    build: ./backend
+    container_name: backend
+    ports:
+      - "4000:4000"
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    depends_on:
+      - redis
+    networks:
+      - app-network
 
-  # client:
-  #   build: ./client
-  #   container_name: client
-  #   ports:
-  #     - "3000:3000"
-  #   depends_on:
-  #     - backend
-  #   networks:
-  #     - app-network
+  client:
+    build: ./client
+    container_name: client
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    networks:
+      - app-network
 
 networks:
   app-network:
