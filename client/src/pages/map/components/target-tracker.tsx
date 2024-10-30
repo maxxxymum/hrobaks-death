@@ -1,4 +1,4 @@
-import { Marker, useMapEvents } from "react-leaflet"
+import { Marker, useMapEvent } from "react-leaflet"
 import { useState } from "react"
 import { LatLng } from "leaflet";
 import { HrobakIcon } from "../icons/hrobak";
@@ -10,11 +10,9 @@ export const TargetTracker = () => {
         setTargets((prevTargets) => [...prevTargets, target]);
     }
 
-    useMapEvents({
-        click: ({ latlng }) => {
-            addTarget(latlng)
-        },
-    })
+    useMapEvent('click', ({ latlng }) => {
+        addTarget(latlng)
+    });
 
     return <>{targets.map((target) => <Marker position={target} icon={HrobakIcon} />)}</>;
 }

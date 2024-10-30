@@ -13,7 +13,7 @@ export function startServer() {
 
   const app = createExpressApp(controllers);
   const server = createServer(app);
-  startSocketServer(server);
+  startSocketServer(server, services);
 
   server.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
