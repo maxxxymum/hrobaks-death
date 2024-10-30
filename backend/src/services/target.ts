@@ -34,7 +34,11 @@ export class TargetService {
         await this.redisService.redisClient.hSet(`target:${id}`, { planeId, id });
         await this.redisService.redisClient.geoAdd('targets', { longitude: Number(lng), latitude: Number(lat), member: id });
 
-        return { id, ...target };
+        const newTarget = { id, ...target };
+
+        this.socketService.emit('target-created', newTarget);
+
+        return newTarget;
     }
 
     async getAllTargetsNearBy(plane: Plane) {
